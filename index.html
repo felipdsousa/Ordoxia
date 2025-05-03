@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" style="--header-height: 48px; --footer-height: 68px;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>void myself</title>
+    <meta name="robots" content="index, follow, nosnippet">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Void Myself">
+    <meta property="og:url" content="https://voidmyself.netlify.app">
+    <meta property="og:image" content="https://voidmyself.netlify.app/icons/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="Experimental digital platform">
+    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="void myself">
+    <meta name="twitter:image" content="https://voidmyself.netlify.app/icons/android-chrome-512x512.png">
+    <meta name="twitter:image:alt" content="Digital experience platform">
+
+    <!-- Favicon Configuration -->
+    <meta name="theme-color" content="#000000">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#000000">
+    <link rel="shortcut icon" href="/icons/favicon.ico">
+
+    <!-- External Resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== ESTILOS GERAIS ========== */
+        body {
+            margin: 0;
+            font-family: 'Noto Sans Mono', monospace;
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            z-index: 1000;
+        }
+
+        .header-title {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: opacity 0.3s ease;
+        }
+
+        .header-title:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== CONTEÚDO PRINCIPAL ========== */
+        .video-background {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 5s ease;
+        }
+
+        .video-background video.loaded {
+            opacity: 1;
+        }
+
+        .content-wrapper {
+            position: absolute;
+            top: 80%;
+            left: 20px;
+            width: calc(100% - 40px);
+            min-height: 200px;
+            line-height: 0.5;
+        }
+
+        .main-headline {
+            font-size: 0.6em;
+            width: 60%;
+            max-width: 600px;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* ========== BOTÕES ========== */
+        .social-button {
+            position: fixed;
+            top: 67px;
+            right: 78px;
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-size: 1.0em;
+            z-index: 1001; /* Garante que fique acima de outros elementos */
+        }
+
+        .social-button:hover {
+            opacity: 0.7;
+        }
+
+        .info-button {
+            position: fixed;
+            top: 67px;
+            right: 55px; /* Ajuste a posição para não sobrepor o Instagram */
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-size: 1.0em;
+            z-index: 1001; /* Garante que fique acima de outros elementos */
+        }
+
+        .info-button:hover {
+            opacity: 0.7;
+        }
+
+        .cta-container {
+            position: absolute;
+            right: 20px;
+            top: 45%;
+            line-height: 1.9;
+            transform: translateY(-50%);
+        }
+
+        .cta-link {
+            font-size: 0.6em;
+            color: #fff;
+            text-decoration: underline;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .cta-link:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .footer-icon {
+            height: 20px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        .datetime-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-inicial;
+            font-size: 0.6em;
+        }
+
+        /* ========== CAIXA DE INFORMAÇÃO ========== */
+        .info-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .info-box-content {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border: 1px solid #fff;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .info-box-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 0.6em;
+            color: #fff;
+        }
+
+        .info-box-close:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                top: 45px;
+            }
+            
+            .main-headline {
+                width: 80%;
+            }
+
+            .cta-container {
+                top: 80%;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-headline {
+                width: 90%;
+            }
+
+            .cta-container {
+                position: static;
+                margin-top: 18px;
+                transform: none;
+                text-align: right;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="https://voidmyself.netlify.app/" class="header-title">VOID MYSELF</a>
+    </header>
+
+    <!-- Ícone de Informação e Instagram -->
+    <a href="#" class="info-button" id="info-button">
+        <i class="fas fa-info-circle"></i> <!-- Ícone de informação do FontAwesome -->
+    </a>
+    <a href="https://www.instagram.com/felipdsousa/" class="social-button" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <div class="video-background">
+        <video autoplay muted loop preload="auto">
+            <source src="Midias/video_Homepage_5.mp4" type="video/mp4">
+            <source src="Midias/video_Homepage_2.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <div class="content-wrapper">
+            <p class="main-headline"> NOS LANÇAMOS AO ABISMO <br>
+                ESPERANDO QUE A NARRATIVA NOS CONCEDA ASAS.</p>
+            <div class="cta-container">
+                <a href="/page2/index.html" class="cta-link">ACESSE E EXPLORE</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <img src="/icons/favicon-32x32.png" class="footer-icon" alt="Logo">
+            <div class="datetime-container">
+                <span id="date"></span>
+                <span id="time"></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Caixa de Informação -->
+    <div class="info-box" id="info-box">
+        <div class="info-box-content">
+            <span class="info-box-close" id="info-box-close">Fechar</span>
+            <p>teste teste teste</p>
+        </div>
+    </div>
+
+    <script>
+        // Função para abrir a caixa de informação
+        document.getElementById('info-button').addEventListener('click', () => {
+            document.getElementById('info-box').style.display = 'flex';
+        });
+
+        // Função para fechar a caixa de informação
+        document.getElementById('info-box-close').addEventListener('click', () => {
+            document.getElementById('info-box').style.display = 'none';
+        });
+
+        // Vídeo e data/hora
+        const video = document.querySelector('.video-background video');
+        video.addEventListener('canplaythrough', () => {
+            video.classList.add('loaded');
+            video.play().catch(error => {
+                console.error('Autoplay bloqueado:', error);
+            });
+        });
+
+        video.addEventListener('error', () => {
+            console.error('Erro ao carregar o vídeo.');
+        });
+
+        function updateDateTime() {
+            const now = new Date();
+            
+            const dateOptions = { 
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            };
+            
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            document.getElementById('date').textContent = now.toLocaleDateString('pt-BR', dateOptions);
+            document.getElementById('time').textContent = now.toLocaleTimeString('pt-BR', timeOptions);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
+</body>
+</html>
